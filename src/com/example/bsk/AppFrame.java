@@ -17,6 +17,25 @@ public class AppFrame extends JFrame{
     private final JRadioButton decodeCheckBox;
 
     AppFrame() {
+        UIManager.put("OptionPane.background", new Color(50,50,50));
+        UIManager.put("OptionPane.messageForeground", new Color(200,200,200));
+        UIManager.put("Panel.background", new Color(50,50,50));
+        UIManager.put("ScrollPane.background", new Color(50,50,50));
+        UIManager.put("List.background", new Color(50,50,50));
+        UIManager.put("List.foreground", new Color(200,200,200));
+        UIManager.put("List.selectionBackground", new Color(150,150,150));
+        UIManager.put("List.border", BorderFactory.createLineBorder(Color.black));
+        UIManager.put("TextField.background", new Color(150,150,150));
+        UIManager.put("TextField.border", BorderFactory.createLineBorder(Color.black));
+        UIManager.put("ComboBox.background", new Color(150,150,150));
+        UIManager.put("Button.foreground", new Color(50,50,50));
+        UIManager.put("Button.background", new Color(150, 150, 150));
+        UIManager.put("ScrollBar", Color.BLACK);
+        UIManager.put("ScrollBar.border", Color.BLACK);
+        UIManager.put("ScrollBar.darkShadow", Color.BLACK);
+        UIManager.put("ScrollBar.background", new Color(50,50,50));
+        UIManager.put("ScrollBar.highlight", new Color(150, 150, 150));
+
         JPanel upperPanel = new JPanel();
         upperPanel.setBackground(new Color(50, 50, 50));
         upperPanel.setBounds(50, 40, 485, 140);
