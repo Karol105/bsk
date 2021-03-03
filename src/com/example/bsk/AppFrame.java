@@ -141,10 +141,13 @@ public class AppFrame extends JFrame{
             //keyTextField.getText() - klucz
             //encodeCheckBox.isSelected() - encode(false lub true)
 
+            String ciphertext = "";
+
             switch (selectedMethod) {
                 case "Rail Fence" -> {
                     //TODO Rail Fence
                     //Rail Fence(file, key, encode(false lub true));
+                    Cipher railFence = new RailFence();
                 }
                 case "Macierz A" -> {
                     //TODO Macierz A
