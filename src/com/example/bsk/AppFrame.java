@@ -175,6 +175,18 @@ public class AppFrame extends JFrame{
                 case "Macierz B" -> {
                     //TODO Macierz B
                     //Macierz B(file, key, encode(false lub true));
+                    Key key = new Key.Builder()
+                    .setX(4)
+                    .setColumn(1)
+                    .setColumn(2)
+                    .setColumn(3)
+                    .setColumn(4)
+                    .build();
+                    Cipher transpositionCipher = new TranspositionCipherStrategy();
+                    String encodeMessage = transpositionCipher.encode("", key);
+
+                    //System.out.println(encodeMessage);
+                    //System.out.println(transpositionCipher.decode(encodeMessage, key));
                 }
             }
             System.out.println("File path: " + file);
