@@ -1,61 +1,61 @@
 package com.example.bsk;
 
-public class RailFence implements Cipher{
+public class RailFence{
+    int numRails;
 
-    private int getTerm(int iteration, int row, int size){
-        if ((size == 0) || (size == 1)) {
-            return 1;
-        }
-        if ((row == 0) || (row == size-1)){
-            return (size-1)*2;
-        }
-        if (iteration % 2 == 0) {
-            return (size-1-row)*2;
-        }
-        return 2*row;
+    public RailFence(int numRails) {
+        this.numRails = numRails;
     }
 
-    public String encode(String message, int key) {
-        if(key<0) {
-            throw new ArithmeticException("key is negative");
-        } else if (key==0) {
-            key = 1;
-        }
-        String encodedMessage = "";
-        for(int row = 0; row < key; row++) {
-            int iter = 0;
-            for(int i = row; i < message.length(); i += getTerm(iter++, row, key)) {
-                encodedMessage += message.charAt(i);
+    String getDecryptedData(String data) {
+        char[] decrypted = new char[data.length()];
+        int n = 0;
+        for(int k = 0 ; k < numRails; k ++) {
+            int index = k;
+            boolean down = true;
+            while(index < data.length() ) {
+                decrypted[index] = data.charAt(n++);
+
+                if(k == 0 || k == numRails - 1) {
+                    index = index + 2 * (numRails - 1);
+                }
+                else if(down) {
+                    index = index +  2 * (numRails - k - 1);
+                    down = !down;
+                }
+                else {
+                    index = index + 2 * k;
+                    down = !down;
+                }
             }
         }
-        return encodedMessage;
+        return new String(decrypted);
     }
 
-    public String decode(String message, int key) {
-        if (key < 0) {
-            throw new ArithmeticException("Negative key value");
-        }
-        StringBuilder decodedMessage = new StringBuilder(message);
-        int currPosition = 0;
-        for(int row = 0; row < key; row++) {
-            int iter = 0;
-            for(int i = row; i < message.length(); i += getTerm(iter++, row, key)) {
-                decodedMessage.setCharAt(i, message.charAt(currPosition++));
+    String getEncryptedData(String data) {
+        char[] encrypted = new char[data.length()];
+        int n = 0;
+
+
+        for(int k = 0 ; k < numRails; k ++) {
+            int index = k;
+            boolean down = true;
+            while(index < data.length() ) {
+                encrypted[n++] = data.charAt(index);
+
+                if(k == 0 || k == numRails - 1) {
+                    index = index + 2 * (numRails - 1);
+                }
+                else if(down) {
+                    index = index +  2 * (numRails - k - 1);
+                    down = !down;
+                }
+                else {
+                    index = index + 2 * k;
+                    down = !down;
+                }
             }
-
-
         }
-
-        return decodedMessage.toString();
-    }
-
-    @Override
-    public String encode(String message, String key) {
-        return encode(message, Integer.parseInt(key));
-    }
-
-    @Override
-    public String decode(String message, String key) {
-        return decode(message, Integer.parseInt(key));
+        return new String(encrypted);
     }
 }

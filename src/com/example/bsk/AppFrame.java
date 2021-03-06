@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class AppFrame extends JFrame{
     private final JButton fileButton;
@@ -166,7 +168,27 @@ public class AppFrame extends JFrame{
                 case "Rail Fence" -> {
                     //TODO Rail Fence
                     //Rail Fence(file, key, encode(false lub true));
-                    Cipher railFence = new RailFence();
+                    RailFence railFenceCipher = new RailFence(3);
+                    String data = "";
+
+                    File file = new File("railfence_test.txt");
+                    Scanner scanner = null;
+                    try {
+                        scanner = new Scanner(file);
+                    } catch (FileNotFoundException fileNotFoundException) {
+                        fileNotFoundException.printStackTrace();
+                    }
+                    while (scanner.hasNext()) {
+                        String line = scanner.nextLine();
+                        data = line;
+                        System.out.println(line);
+
+                        String encrypted =railFenceCipher.getEncryptedData(data);
+                        System.out.println(encrypted);
+
+                        String decrypted = railFenceCipher.getDecryptedData(encrypted);
+                        System.out.println(decrypted);
+                    }
                 }
                 case "Macierz A" -> {
                     //TODO Macierz A
