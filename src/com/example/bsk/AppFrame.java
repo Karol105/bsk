@@ -168,7 +168,8 @@ public class AppFrame extends JFrame{
                 case "Rail Fence" -> {
                     //TODO Rail Fence
                     //Rail Fence(file, key, encode(false lub true));
-                    RailFence railFenceCipher = new RailFence(3);
+                    int kluczrf = Integer.parseInt(keyTextField.getText());
+                    RailFence railFenceCipher = new RailFence(kluczrf);
                     String data = "";
 
                     File file = new File("railfence_test.txt");
@@ -181,7 +182,7 @@ public class AppFrame extends JFrame{
                     while (scanner.hasNext()) {
                         String line = scanner.nextLine();
                         data = line;
-                        System.out.println(line);
+                        //System.out.println(line);
 
                         String encrypted =railFenceCipher.getEncryptedData(data);
                         System.out.println(encrypted);
@@ -197,7 +198,7 @@ public class AppFrame extends JFrame{
                 case "Macierz B" -> {
                     //TODO Macierz B
                     //Macierz B(file, key, encode(false lub true));
-                    Key key = new Key.Builder()
+                   /* Key key = new Key.Builder()
                     .setX(4)
                     .setColumn(1)
                     .setColumn(2)
@@ -206,7 +207,7 @@ public class AppFrame extends JFrame{
                     .build();
                     Cipher transpositionCipher = new TranspositionCipherStrategy();
                     String encodeMessage = transpositionCipher.encode("", key);
-
+            */
                     //System.out.println(encodeMessage);
                     //System.out.println(transpositionCipher.decode(encodeMessage, key));
                 }
