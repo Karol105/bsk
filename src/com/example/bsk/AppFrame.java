@@ -172,7 +172,7 @@ public class AppFrame extends JFrame{
                     RailFence railFenceCipher = new RailFence(kluczrf);
                     String data = "";
 
-                    File file = new File("railfence_test.txt");
+                    //File file = new File("railfence_test.txt");
                     Scanner scanner = null;
                     try {
                         scanner = new Scanner(file);
@@ -183,12 +183,16 @@ public class AppFrame extends JFrame{
                         String line = scanner.nextLine();
                         data = line;
                         //System.out.println(line);
-
-                        String encrypted =railFenceCipher.getEncryptedData(data);
-                        System.out.println(encrypted);
-
+                        String encrypted = railFenceCipher.getEncryptedData(data);
                         String decrypted = railFenceCipher.getDecryptedData(encrypted);
-                        System.out.println(decrypted);
+                        if(encodeCheckBox.isSelected() == true) {
+                            //String encrypted = railFenceCipher.getEncryptedData(data);
+                            System.out.println(encrypted);
+                        }
+                        else if (encodeCheckBox.isSelected() == false) {
+                            //String decrypted = railFenceCipher.getDecryptedData(encrypted);
+                            System.out.println(decrypted);
+                        }
                     }
                 }
                 case "Macierz A" -> {
