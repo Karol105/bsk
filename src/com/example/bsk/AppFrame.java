@@ -1,5 +1,6 @@
 package com.example.bsk;
 
+import javax.crypto.Cipher;
 import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class AppFrame extends JFrame{
@@ -160,7 +162,7 @@ public class AppFrame extends JFrame{
                 dialogMSG("You didn't insert the key.", "Key not inserted");
                 return;
             }
-            String selectedMethod = methodComboBox.getSelectedItem().toString();
+            String selectedMethod = Objects.requireNonNull(methodComboBox.getSelectedItem()).toString();
 
             //file - ścieżka do pliku
             //keyTextField.getText() - klucz
@@ -177,11 +179,13 @@ public class AppFrame extends JFrame{
                     int keyRF = Integer.parseInt(keyTextField.getText());
                     RailFence railFenceCipher = new RailFence(keyRF);
 
-                    for (String word: dataList){
-                        if(encodeCheckBox.isSelected()) {
+                    if(encodeCheckBox.isSelected()) {
+                        for (String word: dataList){
                             newDataList.add(railFenceCipher.getEncryptedData(word));
                         }
-                        else if (!encodeCheckBox.isSelected()) {
+                    }
+                    else if (!encodeCheckBox.isSelected()) {
+                        for (String word: dataList) {
                             newDataList.add(railFenceCipher.getDecryptedData(word));
                         }
                     }
@@ -193,18 +197,39 @@ public class AppFrame extends JFrame{
                 case "Macierz B" -> {
                     //TODO Macierz B
                     //Macierz B(file, key, encode(false lub true));
-                   /* Key key = new Key.Builder()
-                    .setX(4)
-                    .setColumn(1)
-                    .setColumn(2)
-                    .setColumn(3)
-                    .setColumn(4)
-                    .build();
-                    Cipher transpositionCipher = new TranspositionCipherStrategy();
-                    String encodeMessage = transpositionCipher.encode("", key);
-            */
-                    //System.out.println(encodeMessage);
-                    //System.out.println(transpositionCipher.decode(encodeMessage, key));
+                    Key key = null;
+                    try {
+                        key = new Key.Builder()
+                        .setX(4)
+                        .setColumn(1)
+                        .setColumn(2)
+                        .setColumn(3)
+                        .setColumn(4)
+                        .build();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
+                    com.example.bsk.Cipher transpositionCipher = new TranspositionCipherStrategy();
+
+                    String message;
+                    if(encodeCheckBox.isSelected()) {
+
+                        for (String word: dataList
+                        ) {
+                            message = transpositionCipher.encode(word, key);
+                            newDataList.add(message);
+                            System.out.println(message);
+                        }
+                    }
+                    else if (!encodeCheckBox.isSelected()) {
+                        for (String word: dataList
+                        ) {
+                            message = transpositionCipher.decode(word, key);
+                            newDataList.add(message);
+                            System.out.println(message);
+                        }
+                    }
                 }
             }
             dataFile.saveFile(newDataList);
