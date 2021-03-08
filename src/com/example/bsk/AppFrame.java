@@ -182,11 +182,13 @@ public class AppFrame extends JFrame{
                     if(encodeCheckBox.isSelected()) {
                         for (String word: dataList){
                             newDataList.add(railFenceCipher.getEncryptedData(word));
+                            System.out.println(railFenceCipher.getEncryptedData(word));
                         }
                     }
                     else if (!encodeCheckBox.isSelected()) {
                         for (String word: dataList) {
                             newDataList.add(railFenceCipher.getDecryptedData(word));
+                            System.out.println(railFenceCipher.getDecryptedData(word));
                         }
                     }
                 }
