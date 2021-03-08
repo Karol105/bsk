@@ -1,11 +1,13 @@
 package com.example.bsk;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AppFrame extends JFrame{
@@ -146,6 +148,8 @@ public class AppFrame extends JFrame{
         }
     }
 
+
+
     private class ProcessData implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -162,36 +166,23 @@ public class AppFrame extends JFrame{
             //keyTextField.getText() - klucz
             //encodeCheckBox.isSelected() - encode(false lub true)
 
+            DataFile dataFile = new DataFile();
+            ArrayList<String> dataList = dataFile.openFile(file);
+            ArrayList<String> newDataList = new ArrayList<>();
+
             String ciphertext = "";
 
             switch (selectedMethod) {
                 case "Rail Fence" -> {
-                    //TODO Rail Fence
-                    //Rail Fence(file, key, encode(false lub true));
-                    int kluczrf = Integer.parseInt(keyTextField.getText());
-                    RailFence railFenceCipher = new RailFence(kluczrf);
-                    String data = "";
+                    int keyRF = Integer.parseInt(keyTextField.getText());
+                    RailFence railFenceCipher = new RailFence(keyRF);
 
-                    //File file = new File("railfence_test.txt");
-                    Scanner scanner = null;
-                    try {
-                        scanner = new Scanner(file);
-                    } catch (FileNotFoundException fileNotFoundException) {
-                        fileNotFoundException.printStackTrace();
-                    }
-                    while (scanner.hasNext()) {
-                        String line = scanner.nextLine();
-                        data = line;
-                        //System.out.println(line);
-                        String encrypted = railFenceCipher.getEncryptedData(data);
-                        String decrypted = railFenceCipher.getDecryptedData(encrypted);
-                        if(encodeCheckBox.isSelected() == true) {
-                            //String encrypted = railFenceCipher.getEncryptedData(data);
-                            System.out.println(encrypted);
+                    for (String word: dataList){
+                        if(encodeCheckBox.isSelected()) {
+                            newDataList.add(railFenceCipher.getEncryptedData(word));
                         }
-                        else if (encodeCheckBox.isSelected() == false) {
-                            //String decrypted = railFenceCipher.getDecryptedData(encrypted);
-                            System.out.println(decrypted);
+                        else if (!encodeCheckBox.isSelected()) {
+                            newDataList.add(railFenceCipher.getDecryptedData(word));
                         }
                     }
                 }
@@ -216,11 +207,7 @@ public class AppFrame extends JFrame{
                     //System.out.println(transpositionCipher.decode(encodeMessage, key));
                 }
             }
-            System.out.println("File path: " + file);
-            System.out.println("Method: " + methodComboBox.getSelectedItem().toString());
-            System.out.println("Key: " + keyTextField.getText());
-            System.out.println("Encode: " + encodeCheckBox.isSelected());
-            System.out.println("Decode: " + decodeCheckBox.isSelected());
+            dataFile.saveFile(newDataList);
         }
 
         void dialogMSG(String message, String title) {
