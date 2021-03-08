@@ -26,4 +26,11 @@ public class RailFenceTest {
         Assert.assertEquals("EXERCISMISAWESOME",
                 railFence.getDecryptedData("EIEXMSMESAORIWSCE"));
     }
+
+    @Test
+    public void railtest4() {
+        railFence = new RailFence(3);
+        Assert.assertEquals("WEAREDISCOVEREDFLEEATONCE",
+                railFence.getDecryptedData("WECRLTEERDSOEEFEAOCAIVDEN"));
+    }
 }
