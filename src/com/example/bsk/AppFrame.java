@@ -170,7 +170,6 @@ public class AppFrame extends JFrame{
             ArrayList<String> dataList = dataFile.openFile(file);
             ArrayList<String> newDataList = new ArrayList<>();
 
-
             String ciphertext = "";
 
             switch (selectedMethod) {

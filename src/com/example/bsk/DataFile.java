@@ -48,8 +48,6 @@ public class DataFile {
                     fw.write(word+"\n");
                 }
                 fw.close();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
