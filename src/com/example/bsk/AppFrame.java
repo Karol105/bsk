@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class AppFrame extends JFrame{
     private final JButton fileButton;
     private File file;
-    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B"};
+    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B", "Vigenere"};
     private final JComboBox<String> methodComboBox;
     private final JLabel label;
     private final JTextField keyTextField;
@@ -230,6 +230,21 @@ public class AppFrame extends JFrame{
                             message = transpositionCipher.decode(word, key);
                             newDataList.add(message);
                             System.out.println(message);
+                        }
+                    }
+                }
+                case "Vigenere" -> {
+                    String keyV = keyTextField.getText();
+                    if(encodeCheckBox.isSelected()){
+                        for (String word: dataList) {
+                            newDataList.add(Vigenere.encrypt(word, keyV));
+                            System.out.println(Vigenere.encrypt(word, keyV));
+                        }
+                    }
+                    else if(!encodeCheckBox.isSelected()) {
+                        for (String word: dataList) {
+                            newDataList.add(Vigenere.decrypt(word, keyV));
+                            System.out.println(Vigenere.decrypt(word, keyV));
                         }
                     }
                 }
