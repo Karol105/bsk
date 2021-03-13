@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class AppFrame extends JFrame{
     private final JButton fileButton;
     private File file;
-    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B", "Vigenere"};
+    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B", "Vigenere", "Caesar"};
     private final JComboBox<String> methodComboBox;
     private final JLabel label;
     private final JTextField keyTextField;
@@ -248,6 +248,22 @@ public class AppFrame extends JFrame{
                         }
                     }
                 }
+                case "Caesar" -> {
+                    int keyC = Integer.parseInt(keyTextField.getText());
+                    if(encodeCheckBox.isSelected()){
+                        for (String word: dataList) {
+                            newDataList.add(Caesar.encrypt(word, keyC));
+                            System.out.println(Caesar.encrypt(word, keyC));
+                        }
+                    }
+                    else if(!encodeCheckBox.isSelected()) {
+                        for (String word: dataList) {
+                            newDataList.add(Caesar.decrypt(word, keyC));
+                            System.out.println(Caesar.decrypt(word, keyC));
+                        }
+                    }
+                }
+
             }
             dataFile.saveFile(newDataList);
         }
