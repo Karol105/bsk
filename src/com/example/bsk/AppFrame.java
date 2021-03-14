@@ -263,7 +263,6 @@ public class AppFrame extends JFrame{
                         }
                     }
                 }
-
             }
             dataFile.saveFile(newDataList);
         }

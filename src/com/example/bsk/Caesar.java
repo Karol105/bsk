@@ -1,16 +1,21 @@
 package com.example.bsk;
 
+
 public class Caesar {
+    public static final int ALPHABET_SIZE = ('Z' - 'A') + 1;
     static String encrypt(String message, int key) {
         StringBuilder encrypted = new StringBuilder();
         char letter;
+        if(key <0) {
+            key += ALPHABET_SIZE;
+        }
+
         for (char character : message.toCharArray()) {
-            if (character != ' ') {
+            if (Character.isLetter(character)) {
                 if (Character.isLowerCase(character)) {
                     letter = 'a';
                 }
                 else {
-
                     letter = 'A';
                 }
                 int position = character - letter;
@@ -29,5 +34,4 @@ public class Caesar {
         return decrypted;
     }
 
-    
 }
