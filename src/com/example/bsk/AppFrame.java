@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class AppFrame extends JFrame{
     private final JButton fileButton;
     private File file;
-    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B", "Vigenere", "Caesar"};
+    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B", "Vigenere", "Caesar", "LFSR"};
     private final JComboBox<String> methodComboBox;
     private final JLabel label;
     private final JTextField keyTextField;
@@ -155,42 +155,45 @@ public class AppFrame extends JFrame{
     private class ProcessData implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(file==null){
+            String selectedMethod = Objects.requireNonNull(methodComboBox.getSelectedItem()).toString();
+
+            if(file==null&&(!selectedMethod.equals("LFSR"))){
                 dialogMSG("You didn't choose the file.", "File not selected");
                 return;
             } else if (keyTextField.getText().equals("KEY")){
                 dialogMSG("You didn't insert the key.", "Key not inserted");
                 return;
             }
-            String selectedMethod = Objects.requireNonNull(methodComboBox.getSelectedItem()).toString();
 
             //file - ścieżka do pliku
             //keyTextField.getText() - klucz
             //encodeCheckBox.isSelected() - encode(false lub true)
 
-            DataFile dataFile = new DataFile();
-            ArrayList<String> dataList = dataFile.openFile(file);
-            ArrayList<String> newDataList = new ArrayList<>();
-
-            String ciphertext = "";
+            DataFile dataFile;
+            ArrayList<String> dataList;
+            ArrayList<String> newDataList;
 
             switch (selectedMethod) {
                 case "Rail Fence" -> {
+                    dataFile = new DataFile();
+                    dataList = dataFile.openFile(file);
+                    newDataList = new ArrayList<>();
+
                     int keyRF = Integer.parseInt(keyTextField.getText());
                     RailFence railFenceCipher = new RailFence(keyRF);
 
-                    if(encodeCheckBox.isSelected()) {
-                        for (String word: dataList){
+                    if (encodeCheckBox.isSelected()) {
+                        for (String word : dataList) {
                             newDataList.add(railFenceCipher.getEncryptedData(word));
                             System.out.println(railFenceCipher.getEncryptedData(word));
                         }
-                    }
-                    else if (!encodeCheckBox.isSelected()) {
-                        for (String word: dataList) {
+                    } else if (!encodeCheckBox.isSelected()) {
+                        for (String word : dataList) {
                             newDataList.add(railFenceCipher.getDecryptedData(word));
                             System.out.println(railFenceCipher.getDecryptedData(word));
                         }
                     }
+                    dataFile.saveFile(newDataList);
                 }
                 case "Macierz A" -> {
                     //TODO Macierz A
@@ -199,15 +202,19 @@ public class AppFrame extends JFrame{
                 case "Macierz B" -> {
                     //TODO Macierz B
                     //Macierz B(file, key, encode(false lub true));
+                    dataFile = new DataFile();
+                    dataList = dataFile.openFile(file);
+                    newDataList = new ArrayList<>();
+
                     Key key = null;
                     try {
                         key = new Key.Builder()
-                        .setX(4)
-                        .setColumn(1)
-                        .setColumn(2)
-                        .setColumn(3)
-                        .setColumn(4)
-                        .build();
+                                .setX(4)
+                                .setColumn(1)
+                                .setColumn(2)
+                                .setColumn(3)
+                                .setColumn(4)
+                                .build();
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
@@ -215,56 +222,67 @@ public class AppFrame extends JFrame{
                     com.example.bsk.Cipher transpositionCipher = new TranspositionCipherStrategy();
 
                     String message;
-                    if(encodeCheckBox.isSelected()) {
+                    if (encodeCheckBox.isSelected()) {
 
-                        for (String word: dataList
+                        for (String word : dataList
                         ) {
                             message = transpositionCipher.encode(word, key);
                             newDataList.add(message);
                             System.out.println(message);
                         }
-                    }
-                    else if (!encodeCheckBox.isSelected()) {
-                        for (String word: dataList
+                    } else if (!encodeCheckBox.isSelected()) {
+                        for (String word : dataList
                         ) {
                             message = transpositionCipher.decode(word, key);
                             newDataList.add(message);
                             System.out.println(message);
                         }
                     }
+                    dataFile.saveFile(newDataList);
                 }
                 case "Vigenere" -> {
+                    dataFile = new DataFile();
+                    dataList = dataFile.openFile(file);
+                    newDataList = new ArrayList<>();
+
                     String keyV = keyTextField.getText();
-                    if(encodeCheckBox.isSelected()){
-                        for (String word: dataList) {
+                    if (encodeCheckBox.isSelected()) {
+                        for (String word : dataList) {
                             newDataList.add(Vigenere.encrypt(word, keyV));
                             System.out.println(Vigenere.encrypt(word, keyV));
                         }
-                    }
-                    else if(!encodeCheckBox.isSelected()) {
-                        for (String word: dataList) {
+                    } else if (!encodeCheckBox.isSelected()) {
+                        for (String word : dataList) {
                             newDataList.add(Vigenere.decrypt(word, keyV));
                             System.out.println(Vigenere.decrypt(word, keyV));
                         }
                     }
+                    dataFile.saveFile(newDataList);
                 }
                 case "Caesar" -> {
+                    dataFile = new DataFile();
+                    dataList = dataFile.openFile(file);
+                    newDataList = new ArrayList<>();
+
                     int keyC = Integer.parseInt(keyTextField.getText());
-                    if(encodeCheckBox.isSelected()){
-                        for (String word: dataList) {
+                    if (encodeCheckBox.isSelected()) {
+                        for (String word : dataList) {
                             newDataList.add(Caesar.encrypt(word, keyC));
                             System.out.println(Caesar.encrypt(word, keyC));
                         }
-                    }
-                    else if(!encodeCheckBox.isSelected()) {
-                        for (String word: dataList) {
+                    } else if (!encodeCheckBox.isSelected()) {
+                        for (String word : dataList) {
                             newDataList.add(Caesar.decrypt(word, keyC));
                             System.out.println(Caesar.decrypt(word, keyC));
                         }
                     }
+                    dataFile.saveFile(newDataList);
+                }
+                case "LFSR" -> {
+                    System.out.println("GOTO LFSR");
+                    new LFSR(keyTextField.getText());
                 }
             }
-            dataFile.saveFile(newDataList);
         }
 
         void dialogMSG(String message, String title) {
