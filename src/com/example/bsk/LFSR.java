@@ -7,11 +7,9 @@ public class LFSR {
     private String seed;
     private Polynomial polynomial;
 
-    int degree;
     // Define instance variables here.
     // Creates an LFSR with the specified seed and tap.
-    public LFSR(String seed, Polynomial polynomial) {
-        this.seed = seed;
+    public LFSR(Polynomial polynomial) {
         this.polynomial = polynomial;
         System.out.println("seed: not entered yet");
         System.out.println("maxDegree: " + polynomial.getMaxDegree());
@@ -20,7 +18,18 @@ public class LFSR {
              ) {
             System.out.print(power + " ");
         }
+    }
 
+    public Polynomial getPolynomial() {
+        return polynomial;
+    }
+
+    public void setSeed(String seed) {
+        this.seed = seed;
+    }
+
+    public String getSeed() {
+        return seed;
     }
 
     // Returns the length of the LFSR.

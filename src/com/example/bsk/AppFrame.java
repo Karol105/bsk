@@ -278,7 +278,8 @@ public class AppFrame extends JFrame{
                 case "LFSR" -> {
                     Polynomial polynomial = new Polynomial();
                     if (polynomial.polynomialValidate(keyTextField.getText())){
-                        new LFSR(keyTextField.getText(),polynomial);
+                        LFSRFrame lfsrFrame = new LFSRFrame(new LFSR(polynomial));
+                        lfsrFrame.setVisible(true);
                     }
                 }
             }

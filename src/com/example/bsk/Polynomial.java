@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Polynomial {
     private int maxDegree=0;
     private ArrayList<Integer> powers = new ArrayList<>();
-    private static int counter = 0;
+    private String txtPolynomial;
 
     public int getMaxDegree() {
         return maxDegree;
@@ -15,8 +15,11 @@ public class Polynomial {
         return powers;
     }
 
+    public String getTxtPolynomial() {
+        return txtPolynomial;
+    }
+
     public boolean polynomialValidate(String polynomial){
-        counter=0;
         char [] pc = polynomial.toCharArray();
         StringBuilder sbDegree;
         char previousChar='!';
@@ -83,6 +86,7 @@ public class Polynomial {
 //            "You must enter at least second degree polynomial";
             return false;
         }
+        txtPolynomial = polynomial;
         return true;
     }
 
