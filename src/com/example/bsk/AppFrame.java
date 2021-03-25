@@ -1,16 +1,13 @@
 package com.example.bsk;
 
-import javax.crypto.Cipher;
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
+
 
 public class AppFrame extends JFrame{
     private final JButton fileButton;
@@ -279,17 +276,19 @@ public class AppFrame extends JFrame{
                     dataFile.saveFile(newDataList);
                 }
                 case "LFSR" -> {
-                    System.out.println("GOTO LFSR");
-                    new LFSR(keyTextField.getText());
+                    Polynomial polynomial = new Polynomial();
+                    if (polynomial.polynomialValidate(keyTextField.getText())){
+                        new LFSR(keyTextField.getText(),polynomial);
+                    }
                 }
             }
         }
+    }
 
-        void dialogMSG(String message, String title) {
-            JOptionPane.showMessageDialog(null,
-                    message,
-                    title,
-                    JOptionPane.PLAIN_MESSAGE);
-        }
+    public static void dialogMSG(String message, String title) {
+        JOptionPane.showMessageDialog(null,
+                message,
+                title,
+                JOptionPane.PLAIN_MESSAGE);
     }
 }
