@@ -282,6 +282,18 @@ public class AppFrame extends JFrame{
                         lfsrFrame.setVisible(true);
                     }
                 }
+                case "Szyfr strumieniowy" -> {
+                    //TODO Dodać szyfr strumieniowy
+//                    Polynomial polynomial = new Polynomial();
+//                    if (polynomial.polynomialValidate(keyTextField.getText())){
+//                        LFSR lfsr = new LFSR(polynomial);
+//                        LFSRFrame lfsrFrame = new LFSRFrame(lfsr);
+//                        lfsrFrame.setVisible(true);
+
+//                        Można tu wykorzystać klucz wygenerowany w LFSR za pomocą lfsr.getGeneratedChain() - jest to ArrayList<Boolean>
+//                        Aktualnie losowanych bitow jest 7 bo nie ma przycisku STOP. W klasie LFSR, funkcji generateChain, w while możecie to zmienić jak potrzebujecie
+//                    }
+                }
             }
         }
     }

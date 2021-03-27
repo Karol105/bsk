@@ -9,8 +9,6 @@ public class LFSR {
     private ArrayList<Boolean> generatedChain = new ArrayList<>();
     boolean status = false;
 
-    // Define instance variables here.
-    // Creates an LFSR with the specified seed and tap.
     public LFSR(Polynomial polynomial) {
         this.polynomial = polynomial;
         System.out.println("seed: not entered yet");
@@ -43,6 +41,10 @@ public class LFSR {
 
     public String getSeed() {
         return seedTxt;
+    }
+
+    public ArrayList<Boolean> getGeneratedChain() {
+        return generatedChain;
     }
 
     public void generateChain(){
