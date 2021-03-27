@@ -1,11 +1,13 @@
 package com.example.bsk;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class LFSR {
-    private String seed;
-    private Polynomial polynomial;
+    private final Polynomial polynomial;
+    private String seedTxt;
+    private boolean[] seed;
+    private ArrayList<Boolean> generatedChain = new ArrayList<>();
+    boolean status = false;
 
     // Define instance variables here.
     // Creates an LFSR with the specified seed and tap.
@@ -20,45 +22,67 @@ public class LFSR {
         }
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public Polynomial getPolynomial() {
         return polynomial;
     }
 
-    public void setSeed(String seed) {
-        this.seed = seed;
+    public void setSeed(String seedTxt) {
+        this.seedTxt = seedTxt;
+        seed = new boolean[seedTxt.length()];
+        int i=0;
+        for (char c: seedTxt.toCharArray()
+             ) {
+            seed[i] = c == '1';
+            i++;
+        }
     }
 
     public String getSeed() {
-        return seed;
+        return seedTxt;
     }
 
-    // Returns the length of the LFSR.
-    public int length() {
+    public void generateChain(){
+        int testIterations=0;
+
+        boolean xor;
+        boolean firstBit;
+        boolean secBit;
+        ArrayList<Integer> powers = polynomial.getPowers();
+
+        while (testIterations<7){
+            firstBit = seed[powers.get(0)-1];
+            secBit = seed[powers.get(1)-1];
+            xor = firstBit!=secBit;
+            for (int i=2;i<powers.size();i++){
+                secBit = seed[powers.get(i)-1];
+                xor = xor!=secBit;
+            }
+            generatedChain.add(seed[seed.length-1]);
+            step(xor);
+
+            testIterations++;
+        }
+
+        showGeneratedChain();
+
+    }
+
+    public void showGeneratedChain() {
+        for (boolean b: generatedChain
+             ) {
+            System.out.println(b);
+        }
+    }
+
+    public int step(boolean xor) {
+        for (int i=seed.length-1; i>0;i--){
+            seed[i]=seed[i-1];
+        }
+        seed[0]=xor;
         return 0;
-    }
-
-    // Returns bit i of this LFSR as 0 or 1.
-    public int bitAt(int i) {
-        return 0;
-    }
-
-    // Returns a string representation of this LFSR.
-    public String toString() {
-        return null;
-    }
-
-    // Simulates one step of this LFSR; returns next bit as 0 or 1.
-    public int step() {
-        return 0;
-    }
-
-    // Simulates k steps of this LFSR; returns next k bits as a k-bit integer.
-    public int generate(int k) {
-        return 0;
-    }
-
-    // Tests every method in this class.
-    public static void main(String[] args) {
-
     }
 }

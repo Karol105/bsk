@@ -68,6 +68,7 @@ public class LFSRFrame extends JFrame {
                 AppFrame.dialogMSG("Entered good register", "Entered register");
                 lfsr.setSeed(registerTextField.getText());
                 System.out.println("Set register: "+lfsr.getSeed());
+                lfsr.generateChain();
             }
         }
     }
