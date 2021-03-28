@@ -154,7 +154,7 @@ public class AppFrame extends JFrame{
         public void actionPerformed(ActionEvent e) {
             String selectedMethod = Objects.requireNonNull(methodComboBox.getSelectedItem()).toString();
 
-            if(file==null&&(!selectedMethod.equals("LFSR"))&&(!selectedMethod.equals("Szyfr strumieniowy"))){
+            if(file==null&&(!selectedMethod.equals("LFSR"))){
                 dialogMSG("You didn't choose the file.", "File not selected");
                 return;
             } else if (keyTextField.getText().equals("KEY")){
@@ -284,7 +284,6 @@ public class AppFrame extends JFrame{
                         } catch (NullPointerException exception){
                             lfsrFrame = new LFSRFrame(new LFSR(polynomial), "");
                         }
-                        AppFrame.this.setVisible(false);
                         lfsrFrame.setVisible(true);
                     }
                 }
