@@ -1,27 +1,26 @@
 package com.example.bsk;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LFSR {
     private final Polynomial polynomial;
     private String seedTxt;
     private boolean[] seed;
     private ArrayList<Boolean> generatedChain = new ArrayList<>();
-    boolean status = false;
+    private boolean status = false;
+    private int loops = 0;
 
     public LFSR(Polynomial polynomial) {
         this.polynomial = polynomial;
-        System.out.println("seed: not entered yet");
-        System.out.println("maxDegree: " + polynomial.getMaxDegree());
-        System.out.print("Powers: ");
-        for (int power: polynomial.getPowers()
-             ) {
-            System.out.print(power + " ");
-        }
     }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public void setLoops(int loops) {
+        this.loops = loops;
     }
 
     public Polynomial getPolynomial() {
@@ -48,6 +47,7 @@ public class LFSR {
     }
 
     public void generateChain(){
+        generatedChain.clear();
         int testIterations=0;
 
         boolean xor;
@@ -55,7 +55,7 @@ public class LFSR {
         boolean secBit;
         ArrayList<Integer> powers = polynomial.getPowers();
 
-        while (testIterations<7){
+        while (testIterations<loops){
             firstBit = seed[powers.get(0)-1];
             secBit = seed[powers.get(1)-1];
             xor = firstBit!=secBit;
@@ -69,7 +69,7 @@ public class LFSR {
             testIterations++;
         }
 
-        showGeneratedChain();
+//        showGeneratedChain();
 
     }
 

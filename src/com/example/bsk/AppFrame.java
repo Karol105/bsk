@@ -12,7 +12,7 @@ import java.util.Objects;
 public class AppFrame extends JFrame{
     private final JButton fileButton;
     private File file;
-    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B", "Vigenere", "Caesar", "LFSR"};
+    private String[] methods = {"Rail Fence", "Macierz A", "Macierz B", "Vigenere", "Caesar", "LFSR", "Szyfr strumieniowy"};
     private final JComboBox<String> methodComboBox;
     private final JLabel label;
     private final JTextField keyTextField;
@@ -154,7 +154,7 @@ public class AppFrame extends JFrame{
         public void actionPerformed(ActionEvent e) {
             String selectedMethod = Objects.requireNonNull(methodComboBox.getSelectedItem()).toString();
 
-            if(file==null&&(!selectedMethod.equals("LFSR"))){
+            if(file==null&&(!selectedMethod.equals("LFSR"))&&(!selectedMethod.equals("Szyfr strumieniowy"))){
                 dialogMSG("You didn't choose the file.", "File not selected");
                 return;
             } else if (keyTextField.getText().equals("KEY")){
@@ -278,21 +278,23 @@ public class AppFrame extends JFrame{
                 case "LFSR" -> {
                     Polynomial polynomial = new Polynomial();
                     if (polynomial.polynomialValidate(keyTextField.getText())){
-                        LFSRFrame lfsrFrame = new LFSRFrame(new LFSR(polynomial));
+                        LFSRFrame lfsrFrame;
+                        try {
+                            lfsrFrame = new LFSRFrame(new LFSR(polynomial), file.toString());
+                        } catch (NullPointerException exception){
+                            lfsrFrame = new LFSRFrame(new LFSR(polynomial), "");
+                        }
+                        AppFrame.this.setVisible(false);
                         lfsrFrame.setVisible(true);
                     }
                 }
                 case "Szyfr strumieniowy" -> {
-                    //TODO Dodać szyfr strumieniowy
-//                    Polynomial polynomial = new Polynomial();
-//                    if (polynomial.polynomialValidate(keyTextField.getText())){
-//                        LFSR lfsr = new LFSR(polynomial);
-//                        LFSRFrame lfsrFrame = new LFSRFrame(lfsr);
-//                        lfsrFrame.setVisible(true);
-
-//                        Można tu wykorzystać klucz wygenerowany w LFSR za pomocą lfsr.getGeneratedChain() - jest to ArrayList<Boolean>
-//                        Aktualnie losowanych bitow jest 7 bo nie ma przycisku STOP. W klasie LFSR, funkcji generateChain, w while możecie to zmienić jak potrzebujecie
-//                    }
+                    Polynomial polynomial = new Polynomial();
+                    if (polynomial.polynomialValidate(keyTextField.getText())){
+                        LFSR lfsr = new LFSR(polynomial);
+                        LFSRFrame lfsrFrame = new LFSRFrame(lfsr,file.toString());
+                        lfsrFrame.setVisible(true);
+                    }
                 }
             }
         }
