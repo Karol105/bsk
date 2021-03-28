@@ -1,15 +1,19 @@
 package com.example.bsk;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LFSR {
     private final Polynomial polynomial;
     private String seedTxt;
     private boolean[] seed;
-    private ArrayList<Boolean> generatedChain = new ArrayList<>();
-    private boolean status = false;
+    private ArrayList<String> generatedChain = new ArrayList<>();
+    private boolean status = true;
     private int loops = 0;
+
+    private Timer timer;
+    private TimerTask task;
 
     public LFSR(Polynomial polynomial) {
         this.polynomial = polynomial;
@@ -42,39 +46,60 @@ public class LFSR {
         return seedTxt;
     }
 
-    public ArrayList<Boolean> getGeneratedChain() {
+    public ArrayList<String> getGeneratedChain() {
         return generatedChain;
     }
 
-    public void generateChain(){
+    public void generateChain(LFSRFrame  lfsrFrame){
+        status = true;
+        lfsrFrame.clearBitTable();
         generatedChain.clear();
-        int testIterations=0;
+        int[] iterations = {1};
 
-        boolean xor;
-        boolean firstBit;
-        boolean secBit;
+        boolean[] xor = new boolean[1];
+        boolean[] firstBit = new boolean[1];
+        boolean[] secBit = new boolean[1];
         ArrayList<Integer> powers = polynomial.getPowers();
 
-        while (testIterations<loops){
-            firstBit = seed[powers.get(0)-1];
-            secBit = seed[powers.get(1)-1];
-            xor = firstBit!=secBit;
-            for (int i=2;i<powers.size();i++){
-                secBit = seed[powers.get(i)-1];
-                xor = xor!=secBit;
+        timer = new Timer();
+        task = new TimerTask() {
+            public void run() {
+                firstBit[0] = seed[powers.get(0)-1];
+                secBit[0] = seed[powers.get(1)-1];
+                xor[0] = firstBit[0] != secBit[0];
+                for (int i=2;i<powers.size();i++){
+                    secBit[0] = seed[powers.get(i)-1];
+                    xor[0] = xor[0] != secBit[0];
+                }
+
+                if(seed[seed.length-1]){
+                    generatedChain.add("1");
+                } else {
+                    generatedChain.add("0");
+                }
+
+                lfsrFrame.addBitToTable(seed[seed.length-1]);
+
+                step(xor[0]);
+
+                iterations[0]++;
+
+                if(!status){
+                    loops = 0;
+                    task.cancel();
+                } else if(loops!=0&&loops<iterations[0]){
+                    loops = 0;
+                    task.cancel();
+                }
             }
-            generatedChain.add(seed[seed.length-1]);
-            step(xor);
+        };
 
-            testIterations++;
-        }
-
-//        showGeneratedChain();
+        timer.scheduleAtFixedRate(task,400,400);
 
     }
 
     public void showGeneratedChain() {
-        for (boolean b: generatedChain
+        for (String b: generatedChain
              ) {
             System.out.println(b);
         }
