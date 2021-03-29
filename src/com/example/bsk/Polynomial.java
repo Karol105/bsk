@@ -23,6 +23,10 @@ public class Polynomial {
         char [] pc = polynomial.toCharArray();
         StringBuilder sbDegree;
         char previousChar='!';
+        if(polynomial.length()==0){
+            AppFrame.dialogMSG("You have to enter the polynomial", "Invalid key");
+            return false;
+        }
         if (pc[pc.length-1]=='+'||pc[pc.length-1]=='-'||pc[pc.length-1]=='^'){
             AppFrame.dialogMSG("Invalid  function ( last char cannot be '" + pc[pc.length-1] + "' )", "Invalid key");
             return false;
@@ -83,7 +87,9 @@ public class Polynomial {
         }
         if(maxDegree<2){
             AppFrame.dialogMSG("You must enter at least second degree polynomial", "Invalid key");
-//            "You must enter at least second degree polynomial";
+            return false;
+        } else if(powers.size()<2){
+            AppFrame.dialogMSG("You must enter at least two x with power", "Invalid key");
             return false;
         }
         txtPolynomial = polynomial;
