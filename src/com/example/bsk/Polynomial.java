@@ -23,7 +23,7 @@ public class Polynomial {
         char [] pc = polynomial.toCharArray();
         StringBuilder sbDegree;
         char previousChar='!';
-        if(polynomial.equals("")){
+        if(polynomial.length()==0){
             AppFrame.dialogMSG("You have to enter the polynomial", "Invalid key");
             return false;
         }
