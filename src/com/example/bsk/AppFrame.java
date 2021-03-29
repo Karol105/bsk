@@ -162,8 +162,20 @@ public class AppFrame extends JFrame{
                             return file.getName().toLowerCase().endsWith(".txt");
                         }
                     }
-                });                
+                });
+                fileChooser.addChoosableFileFilter(new FileFilter() {
+                    public String getDescription() {
+                        return "JPG Files (*.jpg)";
 
+                    }
+                    public boolean accept(File file) {
+                        if (file.isDirectory()) {
+                            return true;
+                        } else {
+                            return file.getName().toLowerCase().endsWith(".jpg");
+                        }
+                    }
+                });
                 int response = fileChooser.showOpenDialog(null);
 
                 if(response == JFileChooser.APPROVE_OPTION){
