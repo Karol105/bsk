@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
-
+//import java.io.FileFilter;
+import javax.swing.filechooser.FileFilter;
 
 public class AppFrame extends JFrame{
     private final JButton fileButton;
@@ -135,7 +136,33 @@ public class AppFrame extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==fileButton){
-                JFileChooser fileChooser = new JFileChooser();
+                JFileChooser fileChooser = new JFileChooser(); 
+                    fileChooser.addChoosableFileFilter(new FileFilter() {
+                    public String getDescription() {
+                        return "MP3 Files (*.mp3)";
+
+                    }
+                    public boolean accept(File file) {
+                        if (file.isDirectory()) {
+                            return true;
+                        } else {
+                            return file.getName().toLowerCase().endsWith(".mp3");
+                        }
+                    }
+                });
+                fileChooser.addChoosableFileFilter(new FileFilter() {
+                    public String getDescription() {
+                        return "Text Files (*.txt)";
+
+                    }
+                    public boolean accept(File file) {
+                        if (file.isDirectory()) {
+                            return true;
+                        } else {
+                            return file.getName().toLowerCase().endsWith(".txt");
+                        }
+                    }
+                });                
 
                 int response = fileChooser.showOpenDialog(null);
 
