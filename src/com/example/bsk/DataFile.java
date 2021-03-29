@@ -1,6 +1,7 @@
 package com.example.bsk;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -11,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 public class DataFile {
     public ArrayList<String> openFile (File file){
@@ -51,6 +54,14 @@ public class DataFile {
             e.printStackTrace();
         }
         return bytes;
+    }
+    public Image openImageFile(File file){
+        BufferedImage image = null;
+        int width = 1000;
+        int height = 1000;
+        image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
+        //image = ImageIO.read(FileInputStream(file));
+        return image;
     }
     public void saveFile (ArrayList<String> dataList) {
         JFrame parentFrame = new JFrame();
