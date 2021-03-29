@@ -1,5 +1,6 @@
 package com.example.bsk;
 
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.image.BufferedImage;
+import java.awt.Image;
+
+import javax.imageio.ImageIO;
 
 public class DataFile {
     public ArrayList<String> openFile (File file){
