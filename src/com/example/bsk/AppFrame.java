@@ -176,6 +176,19 @@ public class AppFrame extends JFrame{
                         }
                     }
                 });
+                fileChooser.addChoosableFileFilter(new FileFilter() {
+                    public String getDescription() {
+                        return "PNG Files (*.png)";
+
+                    }
+                    public boolean accept(File file) {
+                        if (file.isDirectory()) {
+                            return true;
+                        } else {
+                            return file.getName().toLowerCase().endsWith(".png");
+                        }
+                    }
+                });
                 int response = fileChooser.showOpenDialog(null);
 
                 if(response == JFileChooser.APPROVE_OPTION){
