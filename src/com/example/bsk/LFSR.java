@@ -51,6 +51,7 @@ public class LFSR {
     }
 
     public void generateChain(LFSRFrame  lfsrFrame){
+        lfsrFrame.blockGenerateChainButton();
         status = true;
         lfsrFrame.clearBitTable();
         generatedChain.clear();
@@ -87,9 +88,11 @@ public class LFSR {
                 if(!status){
                     loops = 0;
                     task.cancel();
+                    lfsrFrame.unblockGenerateChainButton();
                 } else if(loops!=0&&loops<iterations[0]){
                     loops = 0;
                     task.cancel();
+                    lfsrFrame.unblockGenerateChainButton();
                 }
             }
         };

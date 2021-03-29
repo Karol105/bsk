@@ -22,7 +22,7 @@ public class LFSRFrame extends JFrame {
     private final JLabel numberOfBitsLabel;
     private final JTextField registerTextField;
     private final JTextField numberOfBitsField;
-    private final JButton enterFirstRegister;
+    private final JButton startGenerateButton;
 
     private final JLabel filePathLabel;
     private final JLabel szyfrStrumieniowyLabel;
@@ -92,13 +92,13 @@ public class LFSRFrame extends JFrame {
         numberOfBitsField.setBackground(new Color(150, 150, 150));
         numberOfBitsField.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        enterFirstRegister = new JButton();
-        enterFirstRegister.setBounds(300, 105, 185, 30);
-        enterFirstRegister.setFocusable(false);
-        enterFirstRegister.setBackground(new Color(150, 150, 150));
-        enterFirstRegister.setBorder(BorderFactory.createLineBorder(Color.black));
-        enterFirstRegister.setText("Generate chain");
-        enterFirstRegister.addActionListener(new startGenerateChainButton());
+        startGenerateButton = new JButton();
+        startGenerateButton.setBounds(300, 105, 185, 30);
+        startGenerateButton.setFocusable(false);
+        startGenerateButton.setBackground(new Color(150, 150, 150));
+        startGenerateButton.setBorder(BorderFactory.createLineBorder(Color.black));
+        startGenerateButton.setText("Generate chain");
+        startGenerateButton.addActionListener(new startGenerateChainButton());
 
         filePathLabel = new JLabel();
         if(!filepath.equals("")){
@@ -166,7 +166,7 @@ public class LFSRFrame extends JFrame {
         upperPanel.add(registerTextField);
         upperPanel.add(numberOfBitsLabel);
         upperPanel.add(numberOfBitsField);
-        upperPanel.add(enterFirstRegister);
+        upperPanel.add(startGenerateButton);
 
         bottomPanel.add(szyfrStrumieniowyButton);
         bottomPanel.add(szyfrStrumieniowyLabel);
@@ -284,5 +284,15 @@ public class LFSRFrame extends JFrame {
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
+    }
+
+    public void blockGenerateChainButton(){
+        startGenerateButton.setEnabled(false);
+        startGenerateButton.setBackground(new Color(100, 100, 100));
+    }
+
+    public void unblockGenerateChainButton(){
+        startGenerateButton.setEnabled(true);
+        startGenerateButton.setBackground(new Color(150, 150, 150));
     }
 }

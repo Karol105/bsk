@@ -23,6 +23,10 @@ public class Polynomial {
         char [] pc = polynomial.toCharArray();
         StringBuilder sbDegree;
         char previousChar='!';
+        if(polynomial.equals("")){
+            AppFrame.dialogMSG("You have to enter the polynomial", "Invalid key");
+            return false;
+        }
         if (pc[pc.length-1]=='+'||pc[pc.length-1]=='-'||pc[pc.length-1]=='^'){
             AppFrame.dialogMSG("Invalid  function ( last char cannot be '" + pc[pc.length-1] + "' )", "Invalid key");
             return false;
