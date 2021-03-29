@@ -192,7 +192,6 @@ public class LFSRFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (firstRegisterValidate(registerTextField.getText())){
-                AppFrame.dialogMSG("Entered good register", "Entered register");
                 lfsr.setSeed(registerTextField.getText());
                 try{
                     lfsr.setLoops(Integer.parseInt(numberOfBitsField.getText()));
@@ -242,7 +241,7 @@ public class LFSRFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             //TODO Dodać szyfr strumieniowy
-            //Wykorzystanie szyfru lfsr.getGeneratedChain() - zwraca ArrayList<Boolean>
+            //Wykorzystanie szyfru lfsr.getGeneratedChain() - zwraca ArrayList<String>
             System.out.println("Go to szyfr strumieniowy with that chain: ");
             lfsr.showGeneratedChain();
         }

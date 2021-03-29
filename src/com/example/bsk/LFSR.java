@@ -94,7 +94,7 @@ public class LFSR {
             }
         };
 
-        timer.scheduleAtFixedRate(task,400,400);
+        timer.scheduleAtFixedRate(task,300,300);
 
     }
 

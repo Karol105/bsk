@@ -83,7 +83,9 @@ public class Polynomial {
         }
         if(maxDegree<2){
             AppFrame.dialogMSG("You must enter at least second degree polynomial", "Invalid key");
-//            "You must enter at least second degree polynomial";
+            return false;
+        } else if(powers.size()<2){
+            AppFrame.dialogMSG("You must enter at least two x with power", "Invalid key");
             return false;
         }
         txtPolynomial = polynomial;
