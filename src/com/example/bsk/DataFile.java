@@ -1,17 +1,16 @@
 package com.example.bsk;
 
-
 import javax.swing.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.awt.image.BufferedImage;
-import java.awt.Image;
-
-import javax.imageio.ImageIO;
 
 public class DataFile {
     public ArrayList<String> openFile (File file){
@@ -35,6 +34,24 @@ public class DataFile {
 
         return dataList;
     }
+    public byte[] openAudioFile(File file) {
+        byte[] bytes = null;
+        int size = (int) file.length();
+        bytes = new byte[size];
+        try {
+            BufferedInputStream buf = new BufferedInputStream(
+                    new FileInputStream(file));
+            try {
+                buf.read(bytes);
+                buf.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bytes;
+    }
     public void saveFile (ArrayList<String> dataList) {
         JFrame parentFrame = new JFrame();
 
@@ -57,6 +74,20 @@ public class DataFile {
                 e.printStackTrace();
             }
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+        }
+    }
+    public void saveAudioFile(byte [] encodedBytes, File file ) {
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bos.write(encodedBytes);
+            bos.flush();
+            bos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
